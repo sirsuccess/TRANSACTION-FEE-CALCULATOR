@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 import "../App.css";
 
@@ -23,17 +23,44 @@ function FormData({ setTransaction }) {
     return feeCharge[0].feeAmount;
   };
 
-  const handleForm = e => {
-    toast.error("Error Notification !", {
-      position: toast.POSITION.TOP_CENTER
-    });
+  const handleFormChange = e => {
     setGetFormData({
       ...getFormData,
       [e.target.name]: e.target.value
     });
   };
 
+  const handleOnblur = e => {
+    console.log("hello");
+
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name === "amount" && value < 1) {
+      toast.error(`${name} can not be empty`, {
+        position: toast.POSITION.TOP_CENTER
+      });
+    }
+  };
   const HandleSubmit = value => {
+    const { bank, accountNo, amount } = value;
+    if (bank === "") {
+      return toast.error(`kindly select bank`, {
+        position: toast.POSITION.TOP_CENTER
+      });
+    }
+    if (accountNo.length < 10 || accountNo.length > 10) {
+      return toast.error(`Account number must be 10 digit`, {
+        position: toast.POSITION.TOP_CENTER
+      });
+    }
+    if (Number(amount) < 1 || Number(amount) > 999999999) {
+      return toast.error(
+        `Amount must not be less then 1 or greater then 999999999`,
+        {
+          position: toast.POSITION.TOP_CENTER
+        }
+      );
+    }
     const minFee = { minFee: calculateFee(getFormData.amount) };
     setTransaction({ ...value, ...minFee });
   };
@@ -43,7 +70,7 @@ function FormData({ setTransaction }) {
       <form onSubmit={() => HandleSubmit(getFormData)}>
         <div className="form-input">
           <label htmlFor="bank">Bank</label>
-          <select name="bank" onChange={handleForm}>
+          <select name="bank" onChange={handleFormChange}>
             <option value="">Select Bank</option>
             <option value="Access Bank Plc">Access Bank Plc</option>
             <option value="Fidelity Bank Plc">Fidelity Bank Plc</option>
@@ -74,7 +101,8 @@ function FormData({ setTransaction }) {
             name="accountNo"
             min="10"
             max="10"
-            onChange={handleForm}
+            onBlur={handleOnblur}
+            onChange={handleFormChange}
             autoComplete="accountNo"
             placeholder="Beneficiary account Number"
           />
@@ -87,7 +115,8 @@ function FormData({ setTransaction }) {
             name="amount"
             autoComplete="amount"
             placeholder="Amount"
-            onChange={handleForm}
+            onBlur={handleOnblur}
+            onChange={handleFormChange}
           />
         </div>
       </form>
