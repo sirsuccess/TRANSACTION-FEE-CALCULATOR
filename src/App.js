@@ -12,7 +12,10 @@ function App() {
   const [transactionState, setTransactionState] = useState([]);
 
   const setTransaction = value => {
-    toast("Wow so easy !");
+    const { minFee } = value;
+    toast.success(`the minimum fee charge is ${minFee}`, {
+      position: toast.POSITION.TOP_CENTER
+    });
     const valueData = {
       ...value,
       time: Time()
@@ -27,7 +30,7 @@ function App() {
         <h2>TRANSACTION FEE CALCULATOR</h2>
       </div>
       <div className="main">
-      <ToastContainer />
+        <ToastContainer />
         <FormData setTransaction={setTransaction} />
         <div className="trasact-table">
           {transactionState.length > 0 ? (

@@ -15,7 +15,7 @@ function TransactionsTable({ transactionState }) {
           <th>Date/Time</th>
         </tr>
         {transactionState.map((item, index) => (
-          <tr>
+          <tr key={index}>
             <td>{item.bank}</td>
             <td>{item.accountNo}</td>
             <td>{item.amount}</td>
