@@ -10,8 +10,8 @@ function TransactionsTable({ transactionState }) {
         <tr>
           <th>Bank</th>
           <th>Account Number</th>
-          <th>Tranfer Amount</th>
-          <th>Tranfer Charge</th>
+          <th>Transfer Amount</th>
+          <th>Transfer Charge</th>
           <th>Date/Time</th>
         </tr>
         {transactionState.map((item, index) => (

@@ -62,12 +62,13 @@ function FormData({ setTransaction }) {
       );
     }
     const minFee = { minFee: calculateFee(getFormData.amount) };
+    document.getElementById("transactionForm").reset();
     setTransaction({ ...value, ...minFee });
   };
 
   return (
     <>
-      <form onSubmit={() => HandleSubmit(getFormData)}>
+      <form onSubmit={() => HandleSubmit(getFormData)} id="transactionForm">
         <div className="form-input">
           <label htmlFor="bank">Bank</label>
           <select name="bank" onChange={handleFormChange}>
